@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIA | TRAINING CENTER</title>
+    <style>
+        :root {
+            --navy-dark: #000810;
+            --navy-mid: #001529;
+            --navy-bright: #003366;
+            --text-gold: #b89b5e;
+            --text-light: #cfd8dc;
+            --success-green: #00ff00;
+        }
+
+        body {
+            background-color: var(--navy-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0; padding: 20px;
+        }
+
+        #login-container, #matrix-container {
+            background: var(--navy-mid);
+            padding: 30px; border-top: 4px solid var(--navy-bright);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            width: 100%; max-width: 700px; border-radius: 2px;
+        }
+
+        h1 { font-size: 1.2em; letter-spacing: 4px; color: white; text-align: center; border-bottom: 1px solid var(--navy-bright); padding-bottom: 15px; text-transform: uppercase; }
+        h2 { font-size: 0.9em; color: var(--text-gold); margin-top: 25px; border-left: 3px solid var(--text-gold); padding-left: 10px; letter-spacing: 1px; }
+
+        .subject-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        
+        .topic-item {
+            display: flex; align-items: center;
+            padding: 10px; font-size: 0.85em;
+            cursor: pointer; transition: all 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.1);
+            margin-bottom: 5px;
+        }
+
+        .topic-item:hover { background: rgba(0,51,102,0.6); transform: translateX(5px); }
+
+        .completed {
+            text-decoration: line-through;
+            color: var(--success-green);
+            border-left: 4px solid var(--success-green);
+            background: rgba(0, 255, 0, 0.05);
+        }
+
+        .checkbox {
+            width: 14px; height: 14px; border: 1px solid var(--text-gold);
+            margin-right: 12px; display: inline-block; position: relative;
+        }
+
+        .completed .checkbox::after {
+            content: '✔'; position: absolute; top: -5px; left: 1px; font-size: 14px;
+        }
+
+        input { background: #000; border: 1px solid var(--navy-bright); color: #00ff00; padding: 12px; width: 85%; text-align: center; margin-bottom: 15px; outline: none; font-family: monospace; }
+        .btn-main { background: var(--navy-bright); color: white; border: none; padding: 12px; cursor: pointer; width: 100%; font-weight: bold; letter-spacing: 2px; }
+        
+        #matrix-container { display: none; }
+        
+        .footer-note { font-size: 0.6em; color: var(--text-gold); text-align: center; margin-top: 20px; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <div id="login-container">
+        <h1>SIA ACADEMY ACCESS</h1>
+        <div style="text-align: center;">
+            <input type="password" id="pass" placeholder="LLAVE DE ACCESO">
+            <br>
+            <button class="btn-main" onclick="unlock()">INICIAR PROTOCOLO</button>
+        </div>
+    </div>
+
+    <div id="matrix-container">
+        <h1>HOJA DE RUTA | AGENTE VESPER</h1>
+        
+        <div class="subject-grid">
+            <section>
+                <h2>01. MATEMÁTICAS</h2>
+                <div class="topic-item" id="m-1" onclick="toggleTopic('m-1')"><span class="checkbox"></span>Jerarquía de Operaciones</div>
+                <div class="topic-item" id="m-2" onclick="toggleTopic('m-2')"><span class="checkbox"></span>Álgebra: Despeje de X</div>
+                <div class="topic-item" id="m-3" onclick="toggleTopic('m-3')"><span class="checkbox"></span>Sistemas de Ecuaciones</div>
+                <div class="topic-item" id="m-4" onclick="toggleTopic('m-4')"><span class="checkbox"></span>Trigonometría Balística</div>
+            </section>
+
+            <section>
+                <h2>02. FÍSICA</h2>
+                <div class="topic-item" id="f-1" onclick="toggleTopic('f-1')"><span class="checkbox"></span>Cinemática (MRU/MRUA)</div>
+                <div class="topic-item" id="f-2" onclick="toggleTopic('f-2')"><span class="checkbox"></span>Leyes de Newton</div>
+                <div class="topic-item" id="f-3" onclick="toggleTopic('f-3')"><span class="checkbox"></span>Energía y Potencia</div>
+                <div class="topic-item" id="f-4" onclick="toggleTopic('f-4')"><span class="checkbox"></span>Termodinámica</div>
+            </section>
+
+            <section>
+                <h2>03. QUÍMICA</h2>
+                <div class="topic-item" id="q-1" onclick="toggleTopic('q-1')"><span class="checkbox"></span>Tabla Periódica</div>
+                <div class="topic-item" id="q-2" onclick="toggleTopic('q-2')"><span class="checkbox"></span>Enlaces Químicos</div>
+                <div class="topic-item" id="q-3" onclick="toggleTopic('q-3')"><span class="checkbox"></span>Estequiometría</div>
+                <div class="topic-item" id="q-4" onclick="toggleTopic('q-4')"><span class="checkbox"></span>Compuestos Orgánicos</div>
+            </section>
+
+            <section>
+                <h2>04. MECÁNICA & INGLÉS</h2>
+                <div class="topic-item" id="i-1" onclick="toggleTopic('i-1')"><span class="checkbox"></span>Mecánica de Fluidos</div>
+                <div class="topic-item" id="i-2" onclick="toggleTopic('i-2')"><span class="checkbox"></span>Sistemas de Engranajes</div>
+                <div class="topic-item" id="i-3" onclick="toggleTopic('i-3')"><span class="checkbox"></span>Technical English (SIA)</div>
+                <div class="topic-item" id="i-4" onclick="toggleTopic('i-4')"><span class="checkbox"></span>Radio Protocols</div>
+            </section>
+        </div>
+
+        <p class="footer-note">EL PROGRESO SE GUARDA AUTOMÁTICAMENTE EN ESTA TERMINAL</p>
+        <button onclick="location.reload()" style="background: #222; margin-top: 10px;" class="btn-main">CERRAR TERMINAL</button>
+    </div>
+
+    <script>
+        function unlock() {
+            if(document.getElementById("pass").value === "Kairo2026") {
+                document.getElementById("login-container").style.display = "none";
+                document.getElementById("matrix-container").style.display = "block";
+                loadProgress();
+            } else { alert("ERROR: CREDENCIALES INVÁLIDAS"); }
+        }
+
+        function toggleTopic(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('completed');
+            saveProgress();
+        }
+
+        function saveProgress() {
+            const completed = [];
+            document.querySelectorAll('.completed').forEach(el => {
+                completed.push(el.id);
+            });
+            localStorage.setItem('siaProgress', JSON.stringify(completed));
+        }
+
+        function loadProgress() {
+            const saved = JSON.parse(localStorage.getItem('siaProgress'));
+            if (saved) {
+                saved.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('completed');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
